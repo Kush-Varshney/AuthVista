@@ -13,7 +13,7 @@ import dotenv from "dotenv"
 dotenv.config()
 
 const app = express()
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 5001
 
 logger.info("Starting Notes App Server...", {
   port: PORT,

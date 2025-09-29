@@ -114,21 +114,21 @@ MONGODB_URI=mongodb://localhost:27017/AuthVista
 JWT_SECRET=your-secret
 JWT_EXPIRE=30d
 CLIENT_URL=http://localhost:3000
-PORT=5000
+PORT=5001
 ```
 
 ### 2) Frontend setup
 ```bash
 cd client
 npm install
-echo "REACT_APP_API_URL=http://localhost:5000/api" > .env
+echo "REACT_APP_API_URL=http://localhost:5001/api" > .env
 npm start
 ```
 
 ### URLs
 - Frontend: http://localhost:3000
-- Backend API: http://localhost:5000/api
-- Health: http://localhost:5000/api/health
+- Backend API: http://localhost:5001/api
+- Health: http://localhost:5001/api/health
 
 ## 📚 API Documentation
 
