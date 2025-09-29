@@ -2,6 +2,7 @@ import express from "express"
 import { body } from "express-validator"
 import { register, login, logout, getMe, forgotPassword, resetPassword, updatePassword } from "../controllers/auth.js"
 import { protect } from "../middlewares/auth.js"
+import { logAuthActivity, logActivity } from "../middlewares/activityLogger.js"
 
 const router = express.Router()
 
@@ -39,14 +40,19 @@ const updatePasswordValidation = [
 ]
 
 // Public routes
-router.post("/register", registerValidation, register)
-router.post("/login", loginValidation, login)
-router.post("/logout", logout)
-router.post("/forgot-password", [body("email").isEmail().normalizeEmail()], forgotPassword)
-router.put("/reset-password/:resettoken", passwordValidation, resetPassword)
+router.post("/register", registerValidation, logAuthActivity("REGISTER"), register)
+router.post("/login", loginValidation, logAuthActivity("LOGIN"), login)
+router.post("/logout", logAuthActivity("LOGOUT"), logout)
+router.post(
+  "/forgot-password",
+  [body("email").isEmail().normalizeEmail()],
+  logActivity("FORGOT_PASSWORD"),
+  forgotPassword,
+)
+router.put("/reset-password/:resettoken", passwordValidation, logActivity("RESET_PASSWORD"), resetPassword)
 
 // Protected routes
 router.get("/me", protect, getMe)
-router.put("/update-password", protect, updatePasswordValidation, updatePassword)
+router.put("/update-password", protect, updatePasswordValidation, logActivity("UPDATE_PASSWORD"), updatePassword)
 
 export default router

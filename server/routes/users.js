@@ -2,6 +2,7 @@ import express from "express"
 import { body } from "express-validator"
 import { getProfile, updateProfile, deleteAccount, getAllUsers } from "../controllers/users.js"
 import { protect, authorize } from "../middlewares/auth.js"
+import { logProfileActivity, logActivity } from "../middlewares/activityLogger.js"
 
 const router = express.Router()
 
@@ -17,10 +18,10 @@ router.use(protect)
 
 // User profile routes
 router.get("/profile", getProfile)
-router.put("/profile", updateProfileValidation, updateProfile)
-router.delete("/account", deleteAccount)
+router.put("/profile", updateProfileValidation, logProfileActivity("UPDATE_PROFILE"), updateProfile)
+router.delete("/account", logProfileActivity("DELETE_ACCOUNT"), deleteAccount)
 
 // Admin only routes
-router.get("/", authorize("admin"), getAllUsers)
+router.get("/", authorize("admin"), logActivity("VIEW_ALL_USERS"), getAllUsers)
 
 export default router
