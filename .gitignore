@@ -6,7 +6,7 @@ client/node_modules/
 # Logs
 logs
 *.log
-.logs.txt
+server/log.txt
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
